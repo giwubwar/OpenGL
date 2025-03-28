@@ -2,7 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 
-// Функция для создания и компиляции шейдера
+// Р¤СѓРЅРєС†РёСЏ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ Рё РєРѕРјРїРёР»СЏС†РёРё С€РµР№РґРµСЂР°
 GLuint CompileShader(const char* source, GLenum type) {
     GLuint shader = glCreateShader(type);
     glShaderSource(shader, 1, &source, nullptr);
@@ -18,7 +18,7 @@ GLuint CompileShader(const char* source, GLenum type) {
     return shader;
 }
 
-// Функция для создания шейдерной программы
+//  Р¤СѓРЅРєС†РёСЏ РґР»СЏ СЃРѕР·РґР°РЅРёСЏ С€РµР№РґРµСЂРЅРѕР№ РїСЂРѕРіСЂР°РјРјС‹
 GLuint CreateShaderProgram(const char* vertexShaderSource, const char* fragmentShaderSource) {
     GLuint vertexShader = CompileShader(vertexShaderSource, GL_VERTEX_SHADER);
     GLuint fragmentShader = CompileShader(fragmentShaderSource, GL_FRAGMENT_SHADER);
@@ -43,13 +43,13 @@ GLuint CreateShaderProgram(const char* vertexShaderSource, const char* fragmentS
 }
 
 int main() {
-    // Инициализация GLFW
+    // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ GLFW
     if (!glfwInit()) {
         std::cerr << "ERROR::GLFW::INIT_FAILED" << std::endl;
         return -1;
     }
 
-    // Создание окна с контекстом OpenGL
+    // РЎРѕР·РґР°РЅРёРµ РѕРєРЅР° СЃ РєРѕРЅС‚РµРєСЃС‚РѕРј OpenGL
     GLFWwindow* window = glfwCreateWindow(800, 600, "OpenGL ES Emulator", nullptr, nullptr);
     if (!window) {
         std::cerr << "ERROR::GLFW::WINDOW_CREATION_FAILED" << std::endl;
@@ -58,33 +58,33 @@ int main() {
     }
 
     glfwMakeContextCurrent(window);
-    glfwSwapInterval(1); // Включаем вертикальную синхронизацию
+    glfwSwapInterval(1); // Р’РєР»СЋС‡Р°РµРј РІРµСЂС‚РёРєР°Р»СЊРЅСѓСЋ СЃРёРЅС…СЂРѕРЅРёР·Р°С†РёСЋ
 
-    // Инициализация GLEW
+    // РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ GLEW
     if (glewInit() != GLEW_OK) {
         std::cerr << "ERROR::GLEW::INIT_FAILED" << std::endl;
         return -1;
     }
 
-    // Определение вершин треугольников
+    // РћРїСЂРµРґРµР»РµРЅРёРµ РІРµСЂС€РёРЅ С‚СЂРµСѓРіРѕР»СЊРЅРёРєРѕРІ
     GLfloat vertices[] = {
-        // Первый треугольник (жёлтый)
+        // РџРµСЂРІС‹Р№ С‚СЂРµСѓРіРѕР»СЊРЅРёРє (Р¶С‘Р»С‚С‹Р№)
         -1.0f,  0.0f, 0.0f,
         -0.5f,  0.5f, 0.0f,
          0.5f,  0.0f, 0.0f,
 
-         // Второй треугольник (жёлтый)
+         // Р’С‚РѕСЂРѕР№ С‚СЂРµСѓРіРѕР»СЊРЅРёРє (Р¶С‘Р»С‚С‹Р№)
           1.0f,  0.0f, 0.0f,
           0.5f,  0.5f, 0.0f,
          -0.5f,  0.0f, 0.0f,
 
-         // Третий треугольник (жёлтый)
+         // РўСЂРµС‚РёР№ С‚СЂРµСѓРіРѕР»СЊРЅРёРє (Р¶С‘Р»С‚С‹Р№)
          -0.5f,  0.5f, 0.0f,
           0.5f,  0.5f, 0.0f,
           0.0f,  1.0f, 0.0f
     };
 
-    // Создание VAO, VBO
+    // РЎРѕР·РґР°РЅРёРµ VAO, VBO
     GLuint VAO, VBO;
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
@@ -100,7 +100,7 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    // Исходный код шейдеров
+    // РСЃС…РѕРґРЅС‹Р№ РєРѕРґ С€РµР№РґРµСЂРѕРІ
     const char* vertexShaderSource = R"(
         #version 130
         in vec3 position;
@@ -113,34 +113,34 @@ int main() {
         #version 130
         out vec4 color;
         void main() {
-            color = vec4(1.0f, 1.0f, 0.0f, 1.0f); // Жёлтый цвет
+            color = vec4(1.0f, 1.0f, 0.0f, 1.0f); // Р–С‘Р»С‚С‹Р№ С†РІРµС‚
         }
     )";
 
-    // Создание шейдерной программы
+    // РЎРѕР·РґР°РЅРёРµ С€РµР№РґРµСЂРЅРѕР№ РїСЂРѕРіСЂР°РјРјС‹
     GLuint shaderProgram = CreateShaderProgram(vertexShaderSource, fragmentShaderSource);
 
-    // Главный цикл
+    // Р“Р»Р°РІРЅС‹Р№ С†РёРєР»
     while (!glfwWindowShouldClose(window)) {
-        // Обработка событий
+        // РћР±СЂР°Р±РѕС‚РєР° СЃРѕР±С‹С‚РёР№
         glfwPollEvents();
 
-        // Очистка экрана
+        // РћС‡РёСЃС‚РєР° СЌРєСЂР°РЅР°
         glClear(GL_COLOR_BUFFER_BIT);
 
-        // Рисуем треугольники
+        // Р РёСЃСѓРµРј С‚СЂРµСѓРіРѕР»СЊРЅРёРєРё
         glUseProgram(shaderProgram);
         glBindVertexArray(VAO);
-        glDrawArrays(GL_TRIANGLES, 0, 3);  // Первый треугольник
-        glDrawArrays(GL_TRIANGLES, 3, 3);  // Второй треугольник
-        glDrawArrays(GL_TRIANGLES, 6, 3);  // Третий треугольник
+        glDrawArrays(GL_TRIANGLES, 0, 3);  // РџРµСЂРІС‹Р№ С‚СЂРµСѓРіРѕР»СЊРЅРёРє
+        glDrawArrays(GL_TRIANGLES, 3, 3);  // Р’С‚РѕСЂРѕР№ С‚СЂРµСѓРіРѕР»СЊРЅРёРє
+        glDrawArrays(GL_TRIANGLES, 6, 3);  // РўСЂРµС‚РёР№ С‚СЂРµСѓРіРѕР»СЊРЅРёРє
         glBindVertexArray(0);
 
-        // Обновление экрана
+        // РћР±РЅРѕРІР»РµРЅРёРµ СЌРєСЂР°РЅР°
         glfwSwapBuffers(window);
     }
 
-    // Освобождение ресурсов
+    // РћСЃРІРѕР±РѕР¶РґРµРЅРёРµ СЂРµСЃСѓСЂСЃРѕРІ
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
     glDeleteProgram(shaderProgram);
